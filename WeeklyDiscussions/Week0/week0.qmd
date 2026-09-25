@@ -1,0 +1,45 @@
+```{r}
+packages <- c("here", "janitor", "tidyverse", "sf", "terra", "tmap", "spData", "spDataLarge", "geodata", "kableExtra", "viridisLite")
+installed_packages <- packages %in% rownames(installed.packages())
+
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+library(here)
+library(janitor)
+library(tidyverse)
+library(sf)
+library(kableExtra)
+
+gdw_df <- read_csv(here("WeeklyDiscussions/Week0/data/gdw.csv")) |>
+  clean_names() # Convert variable names to lower snake case
+```
+
+```{r}
+head(gdw_df, n = 10) |> 
+  kable()
+
+tail(gdw_df, n = 10) |> 
+  kable()
+
+dim(gdw_df)
+nrow(gdw_df)
+ncol(gdw_df)
+
+countries_df <- gdw_df[ , "country"]
+countries_df
+
+gdw_df |> 
+  group_by(dam_type) |>
+  summarise(count = n()) |> 
+  groupby()
+
+sub_dam <- gdw_df |>
+  filter(dam_type == "Dam")
+sub_dam
+
+gdw_df <- gdw_df |>
+  arrange(year_dam)
+```
+
+```
